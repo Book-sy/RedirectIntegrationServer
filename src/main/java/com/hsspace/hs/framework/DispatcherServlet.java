@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.hsspace.hs.controller.IpController;
 import com.hsspace.hs.direct.Redirect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,7 +35,7 @@ public class DispatcherServlet extends HttpServlet {
 	private Map<String, PostDispatcher> postMappings = new HashMap<>();
 
 	// TODO: 可指定package并自动扫描:
-	private List<Class<?>> controllers = List.of();
+	private List<Class<?>> controllers = List.of(IpController.class);
 
 	private ViewEngine viewEngine;
 
