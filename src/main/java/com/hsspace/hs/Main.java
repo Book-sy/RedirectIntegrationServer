@@ -26,21 +26,37 @@ public class Main {
                     while (true) {
                         String[] in = input.next().split(" ");
                         if (in[0].equals("stop")) {
-							Redirect.ENUM.save();
-							Machine.ENUM.save();
+                            Redirect.ENUM.save();
+                            Machine.ENUM.save();
                             tomcat.stop();
                             input.close();
                             System.exit(0);
                             break;
-                        } else if(in[0].equals("add") && in.length==3){
-							Redirect.ENUM.uploadDirect(in[1],in[2]);
-						} else if(in[0].equals("uploadIp") && in.length==3){
-							Machine.ENUM.uploadIp(in[1],in[2]);
-						} else if(in[0].equals("help")){
-                        	System.out.println("stop --ֹͣ����");
-							System.out.println("add </xxx> <m1:80> --���·����¼");
-							System.out.println("uploadIp <m1> <127.0.0.1> --���µ�ַ");
-						}
+                        } else if (in[0].equals("add") && in.length == 3) {
+                            Redirect.ENUM.uploadDirect(in[1], in[2]);
+                        } else if (in[0].equals("uploadIp") && in.length == 3) {
+                            Machine.ENUM.uploadIp(in[1], in[2]);
+                        } else if (in[0].equals("listRedirect")) {
+                            System.out.println("==========");
+                            for(String key : Redirect.ENUM.direct.keySet()){
+                                String value = Redirect.ENUM.direct.get(key);
+                                System.out.println(key+"  -->  "+value);
+                            }
+                            System.out.println("==========");
+                        } else if (in[0].equals("listMachine")) {
+                            System.out.println("==========");
+                            for(String key : Machine.ENUM.machine.keySet()){
+                                String value = Machine.ENUM.machine.get(key);
+                                System.out.println(key+"  -->  "+value);
+                            }
+                            System.out.println("==========");
+                        } else if (in[0].equals("help")) {
+                            System.out.println("stop --停止服务");
+                            System.out.println("add </xxx> <m1:80> --更新服务记录");
+                            System.out.println("uploadIp <m1> <127.0.0.1> --更新地址");
+                            System.out.println("listRedirect  --重定向集群列表");
+                            System.out.println("listMachine  --动态地址对应列表");
+                        }
                     }
                 } catch (LifecycleException e) {
                     e.printStackTrace();

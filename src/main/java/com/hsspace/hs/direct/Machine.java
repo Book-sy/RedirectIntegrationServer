@@ -15,7 +15,7 @@ import java.util.Map;
 public enum  Machine {
     ENUM;
 
-    private Map<String, String> machine = new HashMap<>();
+    public Map<String, String> machine = new HashMap<>();
 
     private String path;
 

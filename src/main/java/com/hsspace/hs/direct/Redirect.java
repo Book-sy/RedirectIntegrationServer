@@ -16,7 +16,7 @@ public enum  Redirect {
 
     ENUM;
 
-    private Map<String, String> direct = new HashMap<>();
+    public Map<String, String> direct = new HashMap<>();
 
     private String path;
 
