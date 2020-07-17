@@ -5,51 +5,62 @@ import com.hsspace.hs.framework.ModelAndView;
 import com.hsspace.hs.framework.GetMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 /**
- * IpControllerÀà
- * Git to£º http://hs.mccspace.com:3000/Qing_ning/web-mvc/
+ * IpControllerç±»
+ * Git toï¼š http://hs.mccspace.com:3000/Qing_ning/web-mvc/
  *
  * @TIME 2020/7/17 16:37
- * @AUTHOR º«Ë¶~
+ * @AUTHOR éŸ©ç¡•~
  */
 
 public class IpController {
 
     @GetMapping("/uploadIp")
-    public ModelAndView uploadIp(HttpSession session, HttpServletRequest request) {
+    public ModelAndView uploadIp(HttpSession session, HttpServletRequest request, HttpServletResponse resp) throws IOException {
         String machine = request.getParameter("machine");
-        Machine.ENUM.uploadIp(machine,getIp(request));
+        Machine.ENUM.uploadIp(machine,getIp(request));// è®¾ç½®å“åº”ç±»å‹:
+        resp.setContentType("text/html");
+        // è·å–è¾“å‡ºæµ:
+        PrintWriter pw = resp.getWriter();
+        // å†™å…¥å“åº”:
+        pw.write("<h1>ç»‘å®šæˆåŠŸ!</h1>");
+        // æœ€åä¸è¦å¿˜è®°flushå¼ºåˆ¶è¾“å‡º:
+        pw.flush();
+        pw.close();
         return null;
     }
 
     public String getIp(HttpServletRequest request){
         /**
-         * »ñÈ¡¾àÀë·şÎñÆ÷×îÔ¶µÄÄÇ¸öip
+         * è·å–è·ç¦»æœåŠ¡å™¨æœ€è¿œçš„é‚£ä¸ªip
          */
         String ip = request.getHeader("x-forwarded-for");
         if (ipIsNullOrEmpty(ip)){
             /**
-             * apache http·şÎñ´úÀí¼ÓÉÏµÄip
+             * apache httpæœåŠ¡ä»£ç†åŠ ä¸Šçš„ip
              */
             ip = request.getHeader("Proxy-Client-IP");
         }
         if (ipIsNullOrEmpty(ip)){
             /**
-             * weblogic²å¼ş¼ÓÉÏµÄÍ·
+             * weblogicæ’ä»¶åŠ ä¸Šçš„å¤´
              */
             ip = request.getHeader("WL-Proxy-Client-IP");
         }
         if (ipIsNullOrEmpty(ip)){
             /**
-             * ÕæÊµip
+             * çœŸå®ip
              */
             ip = request.getHeader("X-Real-IP");
         }
         if (ipIsNullOrEmpty(ip)){
             /**
-             * ×îºóÕæÊµµÄip
+             * æœ€åçœŸå®çš„ip
              */
             ip = request.getRemoteAddr();
         }
