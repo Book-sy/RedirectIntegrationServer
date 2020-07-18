@@ -1,6 +1,7 @@
 package com.hsspace.hs.controller;
 
 import com.hsspace.hs.direct.Machine;
+import com.hsspace.hs.direct.Redirect;
 import com.hsspace.hs.framework.ModelAndView;
 import com.hsspace.hs.framework.GetMapping;
 
@@ -23,15 +24,38 @@ public class IpController {
     @GetMapping("/uploadIp")
     public ModelAndView uploadIp(HttpSession session, HttpServletRequest request, HttpServletResponse resp) throws IOException {
         String machine = request.getParameter("machine");
-        Machine.ENUM.uploadIp(machine,getIp(request));// 设置响应类型:
+        String ip= getIp(request);
+        Machine.ENUM.uploadIp(machine,ip);
+        // 设置响应类型:
         resp.setContentType("text/html");
         // 获取输出流:
         PrintWriter pw = resp.getWriter();
         // 写入响应:
-        pw.write("<h1>绑定成功!</h1>");
+        pw.write("<h1>绑定成功!!!</h1>");
+        pw.write("\n"+machine+" -> "+ip);
         // 最后不要忘记flush强制输出:
         pw.flush();
         pw.close();
+        Machine.ENUM.save();
+        return null;
+    }
+
+    @GetMapping("/uploadDirect")
+    public ModelAndView uploadDirect(HttpSession session, HttpServletRequest request, HttpServletResponse resp) throws IOException {
+        String Interface = request.getParameter("interface");
+        String to = request.getParameter("to");
+        Redirect.ENUM.uploadDirect(Interface,to);
+        // 设置响应类型:
+        resp.setContentType("text/html");
+        // 获取输出流:
+        PrintWriter pw = resp.getWriter();
+        // 写入响应:
+        pw.write("<h1>绑定成功!!!</h1>");
+        pw.write("\n"+Interface+" -> "+toString());
+        // 最后不要忘记flush强制输出:
+        pw.flush();
+        pw.close();
+        Redirect.ENUM.save();
         return null;
     }
 

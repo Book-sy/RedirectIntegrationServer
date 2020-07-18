@@ -18,13 +18,13 @@ public class Main {
 
         Tomcat tomcat = new Tomcat();
 
-        new Thread(new Runnable() {
+        /*new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
                     Scanner input = new Scanner(System.in);
                     while (true) {
-                        String[] in = input.next().split(" ");
+                        String[] in = input.nextLine().split(" ");
                         if (in[0].equals("stop")) {
                             Redirect.ENUM.save();
                             Machine.ENUM.save();
@@ -62,7 +62,7 @@ public class Main {
                     e.printStackTrace();
                 }
             }
-        }).start();
+        }).start();*/
 
         tomcat.setPort(Integer.getInteger("port", 80));
         tomcat.getConnector();
